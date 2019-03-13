@@ -25,7 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         initRoot();
         initToolBar();
         toolbar.setFitsSystemWindows(true);
-//        StatusBarUtil.setTranslucent(this,0);
         StatusBarUtil.setTranslucent(this);
         setContentView(bindLayoutId());
         loadingDialog = new LoadingDialog.Builder(this).create();

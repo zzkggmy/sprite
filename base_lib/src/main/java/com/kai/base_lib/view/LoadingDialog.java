@@ -3,19 +3,19 @@ package com.kai.base_lib.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.ColorRes;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kai.base_lib.R;
+import com.kai.base_lib.bean.LoadingBean;
 
 public class LoadingDialog extends Dialog {
 
-    public LoadingDialog(Context context, int themeResId) {
+    private LoadingDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 
@@ -28,8 +28,7 @@ public class LoadingDialog extends Dialog {
         private @ColorRes
         int textColor = R.color.black_3;
         private int visible = View.VISIBLE;
-        private ImageView imageView;
-        private Animation rotateAnimation;
+        private CircleLoadView circleLoadView;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -62,14 +61,18 @@ public class LoadingDialog extends Dialog {
             LoadingDialog loadingDialog = new LoadingDialog(mContext, R.style.dialog);
             loadingDialog.setContentView(R.layout.loading_dialog_view);
             titleTv = loadingDialog.findViewById(R.id.tv_title_loading_dialog);
-            imageView = loadingDialog.findViewById(R.id.iv_loading_dialog);
+            circleLoadView = loadingDialog.findViewById(R.id.clv_loading_dialog);
             titleTv.setText(text);
             titleTv.setTextSize(textSize);
             titleTv.setTextColor(mContext.getResources().getColor(textColor));
             titleTv.setVisibility(visible);
-            rotateAnimation = AnimationUtils.loadAnimation(mContext,R.anim.dialog_anim);
             loadingDialog.setCancelable(false);
-            imageView.setAnimation(rotateAnimation);
+            LoadingBean loadingBean = new LoadingBean();
+            loadingBean.setType(CircleLoadView.Type.round);
+            loadingBean.setInterval(6);
+            loadingBean.setOutColor(mContext.getResources().getColor(R.color.color_b0b0b0));
+            loadingBean.setArcColor(mContext.getResources().getColor(R.color.color_71E0C0));
+            circleLoadView.setData(loadingBean);
             return loadingDialog;
         }
     }
